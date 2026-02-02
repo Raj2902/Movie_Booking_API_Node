@@ -1,5 +1,10 @@
-import { Movie } from "../models/movie.model.ts";
 import type { Request, Response } from "express";
+import { asyncHandler } from "../middlewares/asyncHandler.ts";
+import {
+  createMovieServc,
+  deleteMovieById,
+  getMovieById,
+} from "../services/movie.service.ts";
 
 /**
  * Creates a new movie record.
@@ -11,22 +16,36 @@ import type { Request, Response } from "express";
  *          or an error message on failure.
  */
 
-export const createMovie = async (req: Request, res: Response) => {
-  try {
-    const movie = await Movie.create(req.body);
-    return res.status(201).json({
-      success: true,
-      error: {},
-      data: movie,
-      message: "Movie created successfully",
-    });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({
-      success: false,
-      error: err,
-      data: {},
-      message: "Something went wrong",
-    });
-  }
-};
+export const createMovie = asyncHandler(async (req: Request, res: Response) => {
+  const movie = await createMovieServc(req);
+
+  return res.status(201).json({
+    success: true,
+    error: {},
+    data: movie,
+    message: "Movie created successfully",
+  });
+});
+
+export const deleteMovie = asyncHandler(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const movie = await deleteMovieById((id || "") as string);
+
+  return res.status(200).json({
+    success: true,
+    error: {},
+    data: movie,
+    message: "Movie deleted successfully",
+  });
+});
+
+export const getMovie = asyncHandler(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const movie = await getMovieById((id || "") as string);
+
+  res.status(200).json({
+    success: true,
+    data: movie,
+    message: "Successfully fetched movie details",
+  });
+});

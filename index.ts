@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 // import { Movie } from "./models/movie.model.ts";
 import { movieRouter } from "./routes/movie.routes.ts";
 import { baseRoute } from "./libs/constants.ts";
+import { errorHandler } from "./middlewares/errorHandler.ts";
 
 //configuring incoming body request
 app.use(express.json());
@@ -12,6 +13,9 @@ app.use(express.urlencoded({ extended: true }));
 
 //defining the routes
 app.use(`${baseRoute}/movies`, movieRouter);
+
+//the global error handler must come after all the routes
+app.use(errorHandler);
 
 app.get("/home", (req, res) => {
   console.log("Hitting/home");
