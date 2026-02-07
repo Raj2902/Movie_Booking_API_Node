@@ -55,11 +55,6 @@ export const deleteMovieById = async (id: string) => {
 
 export const createMovieServc = async (req: Request) => {
   const movie = await Movie.create(req.body);
-
-  if (!movie) {
-    throw new AppError("Unable to create a new movie", 400);
-  }
-
   return movie;
 };
 
