@@ -10,10 +10,12 @@ export const movieSchema = new Schema(
     name: {
       type: String,
       required: true,
+      minLength: 2,
     },
     description: {
       type: String,
       required: true,
+      minLength: 5,
     },
     casts: {
       type: [String],

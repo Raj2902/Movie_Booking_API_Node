@@ -14,13 +14,14 @@ app.use(express.urlencoded({ extended: true }));
 //defining the routes
 app.use(`${baseRoute}/movies`, movieRouter);
 
-//the global error handler must come after all the routes
-app.use(errorHandler);
-
+//sort of a testing api that the apis of the server are working
 app.get("/home", (req, res) => {
   console.log("Hitting/home");
   return res.json({ sucess: true, message: "Fetched home" });
 });
+
+//the global error handler must come after all the routes
+app.use(errorHandler);
 
 app.listen(process.env.PORT, () => {
   //this callback gets executed, once we successfully start the server on the given port
