@@ -5,6 +5,7 @@ import {
   deleteTheatreServc,
   getAllTheatresServc,
   getTheatreServc,
+  updateTheatreServc,
 } from "../services/theatre.service.ts";
 import type { theatreInterface } from "../interface/theatre.interface.ts";
 import type mongoose from "mongoose";
@@ -55,6 +56,20 @@ export const deleteTheatre = asyncHandler(
       sucess: true,
       data: theatre,
       message: "Theatre deleted successfully",
+      error: {},
+    });
+  },
+);
+
+export const updateTheatre = asyncHandler(
+  async (req: Request<{ id: mongoose.Types.ObjectId }>, res: Response) => {
+    const { id } = req.params;
+    const { body } = req;
+    const theatre = await updateTheatreServc(id, body);
+    return res.status(200).json({
+      sucess: true,
+      data: theatre,
+      message: "Theatre updated successfully",
       error: {},
     });
   },

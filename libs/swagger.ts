@@ -17,6 +17,7 @@ export const swaggerOptions = {
     components: {
       schemas: {
         Movie: movieSwaggerSchema,
+        Theatre: movieSwaggerSchema,
       },
     },
   },

@@ -19,7 +19,7 @@ const router = express.Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: Numeric ID of the movie to get
  *     responses:
@@ -90,7 +90,7 @@ router.post("/", createMovie);
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: Numeric ID of the movie to delete
  *     responses:
@@ -123,7 +123,7 @@ router.delete("/:id", deleteMovie);
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: Numeric ID of the movie to update
  *     responses:
@@ -156,7 +156,7 @@ router.put("/:id", updateMovie);
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: Numeric ID of the movie to update
  *     responses:

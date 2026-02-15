@@ -28,7 +28,7 @@ export const getAllTheatresServc = async () => {
 };
 
 /**
- * Get a specific threatre by its it.
+ * Get a specific threatre by its id.
  * @param id the unique id to identify the theatre
  * @returns the specific theatre associated with the id
  */
@@ -59,6 +59,33 @@ export const deleteTheatreServc = async (id: mongoose.Types.ObjectId) => {
   }
 
   const theatre = await Theatre.findByIdAndDelete(id);
+
+  if (!theatre) {
+    throw new AppError("Theatre not found", 404);
+  }
+
+  return theatre;
+};
+
+/**
+ * Update a theatre based on specific theatre id, can be upated prtially as well as completely
+ * @param id Unique theatre id
+ * @param updateData the data that we need to update in the theatre
+ * @returns
+ */
+export const updateTheatreServc = async (
+  id: mongoose.Types.ObjectId,
+  updateData: theatreInterface,
+) => {
+  // validate id
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new AppError("Invalid theatre id", 400);
+  }
+
+  const theatre = await Theatre.findByIdAndUpdate(id, updateData, {
+    new: true,
+    runValidators: true,
+  });
 
   if (!theatre) {
     throw new AppError("Theatre not found", 404);

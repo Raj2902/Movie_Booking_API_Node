@@ -18,6 +18,11 @@ export const theatreSchema = new Schema(
       required: true,
     },
     address: String,
+    movies: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Movie",
+      default: [],
+    },
   },
   { timestamps: true },
 );
