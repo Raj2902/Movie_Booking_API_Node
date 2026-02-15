@@ -8,7 +8,3 @@ export interface MovieInterface {
   director: string;
   releaseStatus: string;
 }
-
-export interface MovieId {
-  id: string;
-}

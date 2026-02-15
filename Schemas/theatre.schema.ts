@@ -6,6 +6,7 @@ export const theatreSchema = new Schema(
     name: {
       type: String,
       required: true,
+      minLength: 5,
     },
     description: String,
     city: {
@@ -17,6 +18,11 @@ export const theatreSchema = new Schema(
       required: true,
     },
     address: String,
+    movies: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Movie",
+      default: [],
+    },
   },
   { timestamps: true },
 );
