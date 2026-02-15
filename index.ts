@@ -7,6 +7,14 @@ import { movieRouter } from "./routes/movie.routes.ts";
 import { baseRoute } from "./libs/constants.ts";
 import { errorHandler } from "./middlewares/errorHandler.ts";
 import { theatreRouter } from "./routes/theatre.route.ts";
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { swaggerOptions } from "./libs/swagger.ts";
+
+// Swagger configuration
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 //configuring incoming body request
 app.use(express.json());

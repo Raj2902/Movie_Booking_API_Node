@@ -4,7 +4,12 @@ import mongoose from "mongoose";
 import type { Request } from "express";
 import type { MovieInterface } from "../interface/movie.interface.js";
 
-export const getMovieById = async (id: string) => {
+/**
+ * Get a specific movie by its id
+ * @param id the unique id to identify the movie
+ * @returns the movie with the specific id
+ */
+export const getMovieById = async (id: mongoose.Types.ObjectId) => {
   // validate id
   if (!mongoose.Types.ObjectId.isValid(id)) {
     throw new AppError("Invalid movie id", 400);
@@ -19,8 +24,14 @@ export const getMovieById = async (id: string) => {
   return movie;
 };
 
+/**
+ * Helps to update a movie with specified id
+ * @param id the unique id to identify the movie
+ * @param updateData the data the needs to be updated
+ * @returns the updated movie
+ */
 export const updateMovieSrvc = async (
-  id: string,
+  id: mongoose.Types.ObjectId,
   updateData: MovieInterface,
 ) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -39,7 +50,12 @@ export const updateMovieSrvc = async (
   return movie;
 };
 
-export const deleteMovieById = async (id: string) => {
+/**
+ * Helps to delete a movie with specified id
+ * @param id the unique id to identify the movie
+ * @returns the deleted movie
+ */
+export const deleteMovieById = async (id: mongoose.Types.ObjectId) => {
   //validate id
   if (!mongoose.Types.ObjectId.isValid(id)) {
     throw new AppError("Invalid movie id", 400);
@@ -53,11 +69,21 @@ export const deleteMovieById = async (id: string) => {
   return movie;
 };
 
+/**
+ * Create a new movie
+ * @param req the request object
+ * @returns the new movie created
+ */
 export const createMovieServc = async (req: Request) => {
   const movie = await Movie.create(req.body);
   return movie;
 };
 
+/**
+ * Get all the movies, movies can be filtered on names of the movies
+ * @param name the name of the movie to search
+ * @returns all the movies
+ */
 export const fetchMovies = async (name?: string) => {
   let query: { name?: RegExp } = {};
   if (name) {
