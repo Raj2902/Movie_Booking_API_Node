@@ -38,7 +38,8 @@ export const getTheatre = asyncHandler(
 
 export const getAllTheatres = asyncHandler(
   async (req: Request, res: Response) => {
-    const theatre = await getAllTheatresServc();
+    const { query } = req;
+    const theatre = await getAllTheatresServc(query);
     return res.status(200).json({
       sucess: true,
       data: theatre,

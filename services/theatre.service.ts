@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
-import type { theatreInterface } from "../interface/theatre.interface.ts";
+import type {
+  theatreInterface,
+  theatreQueryInterface,
+} from "../interface/theatre.interface.ts";
 import { Theatre } from "../models/theatre.model.ts";
 import { AppError } from "../utils/AppError.ts";
 
@@ -17,10 +20,10 @@ export const createTheatreServc = async (body: theatreInterface) => {
  * Helps get all the theaters
  * @returns all the theatres
  */
-export const getAllTheatresServc = async () => {
-  const theatre = await Theatre.find({}).populate("movies");
+export const getAllTheatresServc = async (query?: theatreQueryInterface) => {
+  const theatre = await Theatre.find(query || {}).populate("movies");
 
-  if (!theatre) {
+  if (!theatre.length) {
     throw new AppError("No theatres found", 404);
   }
 
