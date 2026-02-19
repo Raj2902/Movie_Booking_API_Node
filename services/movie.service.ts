@@ -90,7 +90,7 @@ export const fetchMovies = async (name?: string) => {
     query.name = new RegExp(name, "i");
   }
   const movies = await Movie.find(query);
-  if (!movies) {
+  if (!movies.length) {
     throw new AppError("No movie found", 404);
   }
   return movies;
