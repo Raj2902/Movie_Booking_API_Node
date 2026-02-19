@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { type QueryFilter } from "mongoose";
 import type {
   theatreInterface,
   theatreQueryInterface,
 } from "../interface/theatre.interface.ts";
 import { Theatre } from "../models/theatre.model.ts";
 import { AppError } from "../utils/AppError.ts";
+import { offset } from "../libs/constants.ts";
 
 /**
  * Create a theatre
@@ -18,10 +19,19 @@ export const createTheatreServc = async (body: theatreInterface) => {
 
 /**
  * Helps get all the theaters
+ * @param query : data on which we need to filter the theatres with pagination
  * @returns all the theatres
  */
-export const getAllTheatresServc = async (query?: theatreQueryInterface) => {
-  const theatre = await Theatre.find(query || {}).populate("movies");
+export const getAllTheatresServc = async (query: theatreQueryInterface) => {
+  let { limit, page, ...filters } = query;
+
+  const pageLimit = limit || offset,
+    skipPage = page ? (page - 1) * pageLimit : 0;
+
+  const theatre = await Theatre.find(filters as {})
+    .skip(skipPage)
+    .limit(pageLimit)
+    .populate("movies");
 
   if (!theatre.length) {
     throw new AppError("No theatres found", 404);

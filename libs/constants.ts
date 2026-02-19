@@ -17,3 +17,5 @@ export const dummyMovie = {
   director: "Christopher Nolan",
   releaseStatus: "RELEASED",
 };
+
+export const offset = 5;

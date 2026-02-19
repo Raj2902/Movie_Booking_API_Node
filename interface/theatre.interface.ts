@@ -9,9 +9,14 @@ export interface theatreInterface {
   movie: mongoose.Schema.Types.ObjectId[];
 }
 
-export interface theatreQueryInterface {
+export interface theatreFilters {
   name?: string;
   city?: string;
-  pincode?: number;
+  pincode?: string;
   address?: string;
 }
+
+export type theatreQueryInterface = theatreFilters & {
+  limit?: number;
+  page?: number;
+};
