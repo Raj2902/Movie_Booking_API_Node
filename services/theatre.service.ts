@@ -18,7 +18,7 @@ export const createTheatreServc = async (body: theatreInterface) => {
  * @returns all the theatres
  */
 export const getAllTheatresServc = async () => {
-  const theatre = await Theatre.find({});
+  const theatre = await Theatre.find({}).populate("movies");
 
   if (!theatre) {
     throw new AppError("No theatres found", 404);
@@ -38,7 +38,7 @@ export const getTheatreServc = async (id: mongoose.Types.ObjectId) => {
     throw new AppError("Invalid theatre id", 400);
   }
 
-  const theatre = await Theatre.findById(id);
+  const theatre = await Theatre.findById(id).populate("movies");
 
   if (!theatre) {
     throw new AppError("Theatre not found", 404);
@@ -58,7 +58,7 @@ export const deleteTheatreServc = async (id: mongoose.Types.ObjectId) => {
     throw new AppError("Invalid theatre id", 400);
   }
 
-  const theatre = await Theatre.findByIdAndDelete(id);
+  const theatre = await Theatre.findByIdAndDelete(id).populate("movies");
 
   if (!theatre) {
     throw new AppError("Theatre not found", 404);
@@ -85,7 +85,7 @@ export const updateTheatreServc = async (
   const theatre = await Theatre.findByIdAndUpdate(id, updateData, {
     new: true,
     runValidators: true,
-  });
+  }).populate("movies");
 
   if (!theatre) {
     throw new AppError("Theatre not found", 404);
