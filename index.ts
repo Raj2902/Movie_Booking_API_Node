@@ -33,14 +33,17 @@ app.get("/home", (req, res) => {
 //the global error handler must come after all the routes
 app.use(errorHandler);
 
-app.listen(process.env.PORT, () => {
-  //this callback gets executed, once we successfully start the server on the given port
-  console.log(`Server started on Port ${process.env.PORT}`);
+async function startServer() {
+  try {
+    await mongoose.connect(process.env.DB_URL as string);
+    console.log("Connected to DB");
 
-  mongoose
-    .connect(process.env.DB_URL as string) //connects to the mongo server
-    .then(async () => {
-      console.log("Connected!");
-    })
-    .catch((err) => console.log(err));
-});
+    app.listen(process.env.PORT, () => {
+      console.log(`Server running on ${process.env.PORT}`);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+startServer();
